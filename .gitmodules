@@ -1,3 +1,6 @@
 [submodule "typecho"]
 	path = typecho
 	url = https://github.com/typecho/typecho
+[submodule "ssl"]
+	path = ssl
+	url = https://github.com/Neilpang/acme.sh.git
