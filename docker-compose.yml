@@ -11,6 +11,7 @@ services:
       - logs:/var/log/nginx      
 #      - ./site.conf:/etc/nginx/conf.d/site.conf
 #      - ./typecho/config.inc.php:/app/config.inc.php
+      - /root/.acme.sh/test.faintghost.com:/etc/ssl/certs
     expose: 
       - '80'
       - '443'
