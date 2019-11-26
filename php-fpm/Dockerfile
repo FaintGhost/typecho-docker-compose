@@ -27,5 +27,5 @@ RUN apk update \
 	\
 	&& rm /var/cache/apk/*
 
-COPY ./php.ini /usr/local/etc/php/
-COPY ./www.conf /usr/local/etc/php-fpm.d/
+COPY php-fpm/php.ini /usr/local/etc/php/
+COPY php-fpm/www.conf /usr/local/etc/php-fpm.d/
