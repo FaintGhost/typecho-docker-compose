@@ -24,17 +24,27 @@ GetIPAddress(){
 }
 
 Config(){
-    read -p "是否提示无法创建config.inc.php文件?" yn
-
-    if $yn="y"
-    then
-        sed -i "s/'user' => 'typecho'/'user' => '$dbun'/g" /root/app/config.inc.php
-        sed -i "s/'password' => 'mypassword'/'password' => '$dbpw'/g" /root/app/config.inc.php
-        sed -i "s/'database' => 'typecho'/'database' => '$dbname'/g" /root/app/config.inc.php
-        mv /root/app/config.inc.php /root/app/typecho
-    else
-        echo "请完成基本配置！"
-        Config
+    while true:
+    do
+        read -r -p "是否提示无法创建config.inc.php文件? [y/n] " input
+        
+        case $input in
+            [yY][eE][sS]|[yY])
+                sed -i "s/'user' => 'typecho'/'user' => '$dbun'/g" /root/app/config.inc.php
+                sed -i "s/'password' => 'mypassword'/'password' => '$dbpw'/g" /root/app/config.inc.php
+                sed -i "s/'database' => 'typecho'/'database' => '$dbname'/g" /root/app/config.inc.php
+                mv /root/app/config.inc.php /root/app/typecho
+            ;;
+            
+            [nN][oO]|[nN])
+                echo "请完成基本配置！"
+            ;;
+            
+            *)
+                echo "请完成基本配置！"
+            ;;
+        esac
+    done
 }
 
 #EnableSSL(){
