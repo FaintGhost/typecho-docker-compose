@@ -1,6 +1,5 @@
 #!/bin/sh
 
-
 SetDomain(){
     read -p "请输入你要作为博客的域名: " domain
     sed -i "s/yourdomain.com/$domain/g" /root/app/typecho.conf
@@ -17,9 +16,9 @@ SetDB(){
     mv /root/app/config.inc.php /root/app/typecho
 }
 
-EnableSSL(){
-    
-}
+#EnableSSL(){
+#    
+#}
 
 echo "开始安装"
 SetDomain
