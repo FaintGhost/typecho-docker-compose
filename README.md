@@ -1,4 +1,16 @@
-`git clone --recursive https://github.com/FaintGhost/typecho-docker-compose.git app`
+使用
+
+```bash
+git clone --recursive https://github.com/FaintGhost/typecho-docker-compose.git app
+```
+
+克隆仓库
+
+更改mysql.env中的密码
+
+更改typecho.conf 中的域名
+
+如有证书放在ssl文件夹下
 
 ```nginx
     location / {
