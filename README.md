@@ -49,7 +49,7 @@ define('__TYPECHO_SECURE__',true);
 ```nginx
 server {
     listen 443 ssl http2;
-    server_name your.awesome.blog;
+    server_name yourdomain.com;
     index index.html index.htm index.php;
     root /app;
     
