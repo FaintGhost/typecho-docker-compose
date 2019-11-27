@@ -10,7 +10,13 @@ git clone --recursive https://github.com/FaintGhost/typecho-docker-compose.git a
 
 更改typecho.conf 中的域名
 
-如有证书放在ssl文件夹下
+使用acme.sh生成证书
+
+```bash
+./acme.sh --issue -d test.faintghost.com -w /root/app/typecho
+```
+
+由于Chrome浏览器对HTTPS要求较高，Firefox已经显示小绿锁，可是Chrome还是有警告提示，F12查看，评论表单的action地址还是HTTP，找到站点主题目录下的`comments.php`文件，并搜索`$this->commentUrl()`,将其替换为：`echo str_replace("http","https",$this->commentUrl());` 最后保存。 
 
 ```nginx
     location / {
@@ -26,8 +32,8 @@ server {
     root /app;
     
     # cert
-    ssl_certificate /app/fullchain.cer;
-    ssl_certificate_key /app/test.faintghost.com.key;
+    ssl_certificate /app/ssl/fullchain.cer;
+    ssl_certificate_key /app/ssl/test.faintghost.com.key;
 
     # intermediate configuration. tweak to your needs.
     ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
