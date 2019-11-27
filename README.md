@@ -27,29 +27,35 @@ git clone --recursive https://github.com/FaintGhost/typecho-docker-compose.git a
 使用acme.sh生成证书
 
 ```bash
-./acme.sh --issue -d test.faintghost.com -w /root/app/typecho
+./acme.sh --issue -d yourdomain.com -w /root/app/typecho
 ```
 
 将证书拷贝到typecho目录下
+
+取消注释config.inc.php中的
+
+```php
+define('__TYPECHO_SECURE__',true);
+```
 
 更改typecho.conf添加如下内容
 
 ```nginx
     location / {
-        rewrite ^/(.*)$ https://test.faintghost.com/$1 permanent;
+        rewrite ^/(.*)$ https://yourdomain.com/$1 permanent;
     }
 ```
 
 ```nginx
 server {
     listen 443 ssl http2;
-    server_name test.faintghost.com;
+    server_name your.awesome.blog;
     index index.html index.htm index.php;
     root /app;
     
     # cert
     ssl_certificate /app/fullchain.cer;
-    ssl_certificate_key /app/test.faintghost.com.key;
+    ssl_certificate_key /app/yourdomain.com.key;
 
     # intermediate configuration. tweak to your needs.
     ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
