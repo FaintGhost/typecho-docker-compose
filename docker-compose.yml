@@ -8,8 +8,7 @@ services:
     volumes:
       - ./typecho:/app
       - ./typecho.conf:/etc/nginx/conf.d/default.conf
-      - logs:/var/log/nginx      
-      - ./ssl:/app/ssl
+      - logs:/var/log/nginx
     expose: 
       - '80'
       - '443'

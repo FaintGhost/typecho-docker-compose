@@ -32,8 +32,8 @@ server {
     root /app;
     
     # cert
-    ssl_certificate /app/ssl/fullchain.cer;
-    ssl_certificate_key /app/ssl/test.faintghost.com.key;
+    ssl_certificate /app/fullchain.cer;
+    ssl_certificate_key /app/test.faintghost.com.key;
 
     # intermediate configuration. tweak to your needs.
     ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
