@@ -1,4 +1,5 @@
 #!/bin/sh
+IP="curl http://members.3322.org/dyndns/getip"
 
 SetDomain(){
     read -p "请输入你要作为博客的域名: " domain
@@ -16,6 +17,11 @@ SetDB(){
     mv /root/app/config.inc.php /root/app/typecho
 }
 
+GetIPAddress(){
+	getIpAddress=""
+	getIpAddress=$(curl -sS --connect-timeout 10 -m 60 http://members.3322.org/dyndns/getip)
+}
+
 #EnableSSL(){
 #    
 #}
@@ -31,3 +37,5 @@ echo "-------------------------------------"
 echo "开始安装"
 cd /root/app
 docker-compose up -d
+GetIPAddress
+echo "安装完成，博客地址http://$getIpAddress"
