@@ -32,7 +32,7 @@ services:
       - lnmp      
 
   db:
-    image: mysql:5.7.21
+    image: mysql:5.7.28
     container_name: mysql
     restart: always
     expose: 
