@@ -12,7 +12,7 @@ SetDB(){
     read -p "请输入数据库密码: " dbpw
     sed -i "s/myrootpassword/$dbpw/g" /root/app/mysql.env
     sed -i "s/typecho/$dbun/g" /root/app/mysql.env
-    sed -i "s/mypassword/$dbpw/g" /root/app/mysql.envs
+    sed -i "s/mypassword/$dbpw/g" /root/app/mysql.env
     mv /root/app/config.inc.php /root/app/typecho
 }
 
