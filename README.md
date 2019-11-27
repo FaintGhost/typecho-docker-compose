@@ -1,6 +1,6 @@
 踩了很多坑的使用docker搭建typecho博客
 
-#### 安装
+### 安装
 
 克隆仓库
 
@@ -8,21 +8,21 @@
 git clone --recursive https://github.com/FaintGhost/typecho-docker-compose.git app
 ```
 
-更改mysql.env中的数据库密码
+更改**`mysql.env`**中的数据库密码
 
-更改typecho.conf 中的域名为自己的域名
+更改**`typecho.conf`** 中的域名为自己的域名
 
 完成后使用`cd app`进入目录然后使用`docker-compose up -d`启动服务
 
 浏览器输入`http://yourdomain.com`注意这里数据库填写db帐号填写typecho密码是自己改的
 
-下一步会告诉你没有权限创建config.inc.php文件
+下一步会告诉你没有权限创建**`config.inc.php`**文件
 
 使用`mv config.inc.php typecho`移动文件然后使用`nano config.inc.php`把数据库部分的内容填上`Ctrl+X`保存退出
 
 接下来一路下一步就可以进入部署好的网站了
 
-#### 全站开启SSL
+### 全站开启SSL
 
 使用acme.sh生成证书
 
