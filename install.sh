@@ -37,4 +37,4 @@ echo "开始安装"
 cd /root/app
 docker-compose up -d
 GetIPAddress
-echo "安装完成，博客地址http://$getIpAddress"
+echo "安装完成，博客地址http://$domain"
