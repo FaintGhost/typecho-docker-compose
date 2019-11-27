@@ -24,7 +24,7 @@ GetIPAddress(){
 }
 
 Config(){
-    while true:
+    while true
     do
         read -r -p "是否提示无法创建config.inc.php文件? [y/n] " input
         
@@ -34,12 +34,11 @@ Config(){
                 sed -i "s/'password' => 'mypassword'/'password' => '$dbpw'/g" /root/app/config.inc.php
                 sed -i "s/'database' => 'typecho'/'database' => '$dbname'/g" /root/app/config.inc.php
                 mv /root/app/config.inc.php /root/app/typecho
+                break
             ;;
-            
             [nN][oO]|[nN])
                 echo "请完成基本配置！"
             ;;
-            
             *)
                 echo "请完成基本配置！"
             ;;
