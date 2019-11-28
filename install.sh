@@ -7,14 +7,17 @@ choose(){
     until
     echo "1.开始安装Typecho"
     echo "2.申请Let's Encrypt证书并开启SSL"
-    echo -e "3.退出脚本 \n" 
+    echo -e "3.退出脚本 \n"
     read input
     test $input = 6
     do
         case $input in
-            1) setup;;
-            2) enableSSL;;    
-            3) break;;
+            1) setup
+            break;;
+            2) enableSSL
+            break;;
+            3)
+            break;;
         esac
     done
 }
