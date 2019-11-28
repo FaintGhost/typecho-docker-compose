@@ -7,7 +7,7 @@ services:
     restart: always
     volumes:
       - ./typecho:/typecho
-      - ./ssl:/typecho/ssl
+      - ./ssl:/etc/nginx/ssl
       - ./typecho.conf:/etc/nginx/conf.d/default.conf
       - logs:/var/log/nginx
     ports:
