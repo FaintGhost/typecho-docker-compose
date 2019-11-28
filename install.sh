@@ -1,8 +1,46 @@
-#!/bin/sh
+#!/bin/bash
 
 INSTALL_PATH=`pwd`
 
-SetDomain(){
+checkRoot(){
+    if [ $(id -u) != "0" ]; then
+        echo "ROOT用户 [x]"
+        echo "请使用ROOT用户执行本脚本！"
+        exit 1
+    fi
+    echo "ROOT用户 [✓]"
+    echo "执行脚本!"
+}
+
+checkDockerInstall()
+{
+    echo "检查是否已安装Docker"
+    docker -v
+    if [ $? -eq  0 ]; then
+        echo "检查到Docker已安装!"
+    else
+        echo "开始安装Docker"
+        curl -s https://get.docker.com | sudo sh
+        echo "安装完成!"
+    fi
+    # 创建公用网络==bridge模式
+    #docker network create share_network
+    echo "检查是否已安装docker-compose"
+    docker-compose -v
+    if [ $? -eq  0 ]; then
+        echo "检查到docker-compose已安装!"
+    else
+        echo "开始安装docker-compose"
+        sudo curl -L "https://github.com/docker/compose/releases/download/1.25.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+        sudo chmod +x /usr/local/bin/docker-compose
+        echo "安装完成!"
+    fi    
+}
+
+docker_install
+
+
+setDomain(){
     read -p "请输入你要作为博客的域名: " domain
     sed -i "s/yourdomain.com/$domain/g" $INSTALL_PATH/typechohttp.conf
     sed -i "s/yourdomain.com/$domain/g" $INSTALL_PATH/typechohttps.conf
@@ -10,7 +48,7 @@ SetDomain(){
     echo "将域名设定为$domain"
 }
 
-SetDB(){
+setDB(){
     read -p "请输入数据库名: " dbname
     read -p "请输入数据库ROOT密码: " dbrootpw
     read -p "请输入数据库用户名: " dbun
@@ -21,12 +59,12 @@ SetDB(){
     sed -i "s/mypassword/$dbpw/g" $INSTALL_PATH/mysql.env
 }
 
-GetIPAddress(){
+getIPAddress(){
     getIpAddress=""
     getIpAddress=$(curl -sS --connect-timeout 10 -m 60 http://members.3322.org/dyndns/getip)
 }
 
-Config(){
+config(){
     while true
     do
         read -r -p "是否提示无法创建config.inc.php文件? [y/n] " input
@@ -50,7 +88,7 @@ Config(){
     done
 }
 
-EnableSSL(){
+enableSSL(){
     while true
     do
         read -r -p "是否要开启全站SSL? [y/n]" input
@@ -69,7 +107,7 @@ EnableSSL(){
                 mv /root/.acme.sh/$domain/$domain.key $INSTALL_PATH/ssl
                 docker-compose restart nginx
                 echo "所有配置已完成"
-                echo "请使用https://$domain访问您的博客"
+                echo "请使用'https://$domain'访问您的博客"
                 break
             ;;
             [nN][oO]|[nN])
@@ -84,24 +122,26 @@ EnableSSL(){
     done
 }
 
-Setup(){
+setup(){
+    checkRoot
+    checkDockerInstall
     echo "开始安装"
-    SetDomain
+    setDomain
     echo "域名配置完成"
     echo "----------------------------------------"
     echo "开始配置数据库"
-    SetDB
+    setDB
     echo "数据库配置完成"
     echo "----------------------------------------"
     echo "开始安装"
     cd $INSTALL_PATH
     docker-compose up -d
-    echo "安装完成，请打开http://$domain进行基本配置"
+    echo "安装完成，请打开'http://$domain'进行基本配置"
     echo "----------------------------------------"
-    Config
+    config
     echo "请回到网页完成后续配置"
     echo "----------------------------------------"
-    EnableSSL
+    enableSSL
 }
 
-Setup
+setup
