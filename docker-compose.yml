@@ -6,8 +6,8 @@ services:
     container_name: nginx
     restart: always
     volumes:
-      - ./typecho:/app
-      - ./ssl:/app/ssl
+      - ./typecho:/typecho
+      - ./ssl:/typecho/ssl
       - ./typecho.conf:/etc/nginx/conf.d/default.conf
       - logs:/var/log/nginx
     ports:
@@ -23,7 +23,7 @@ services:
     container_name: php-fpm
     restart: always
     volumes:
-      - ./typecho:/app
+      - ./typecho:/typecho
     depends_on:
       - db
     networks: 
