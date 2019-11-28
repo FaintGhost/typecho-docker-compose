@@ -20,7 +20,7 @@ define('__TYPECHO_THEME_DIR__', '/usr/themes');
 define('__TYPECHO_ADMIN_DIR__', '/admin/');
 
 /** 开启HTTPS */
-//define('__TYPECHO_SECURE__',true);
+#define('__TYPECHO_SECURE__',true);
 
 /** 设置包含路径 */
 @set_include_path(get_include_path() . PATH_SEPARATOR .
