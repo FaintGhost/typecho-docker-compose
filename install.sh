@@ -59,10 +59,14 @@ EnableSSL(){
                 mv typechohttps.conf typecho.conf
                 sed -i "s/#define('__TYPECHO_SECURE__',true);/define('__TYPECHO_SECURE__',true);/g" /root/app/typecho/config.inc.php
                 sed -i 's#$this->commentUrl()#echo str_replace("http","https",\$this->commentUrl());#g' /root/app/typecho/usr/themes/default/comments.php
+                echo "使用acme.sh申请Let's Encrypt证书"
                 chmod +x /root/app/acme.sh/acme.sh
                 /root/app/acme.sh/acme.sh --issue -d $domain -w /root/app/typecho --force
+                echo "证书申请成功"
                 mv /root/.acme.sh/$domain/fullchain.cer /root/app/typecho
                 mv /root/.acme.sh/$domain/$domain.key /root/app/typecho
+                docker-compose restart nginx
+                echo "所有配置已完成"
                 break
             ;;
             [nN][oO]|[nN])
