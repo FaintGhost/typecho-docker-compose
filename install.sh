@@ -14,7 +14,7 @@ SetDB(){
     read -p "请输入数据库用户名: " dbun
     read -p "请输入数据库密码: " dbpw
     sed -i "s/MYSQL_DATABASE=typecho/MYSQL_DATABASE=$dbname/g" /root/app/mysql.env
-    sed -i "s/myrootpassword/$dbpw/g" /root/app/mysql.env
+    sed -i "s/myrootpassword/$dbrootpw/g" /root/app/mysql.env
     sed -i "s/MYSQL_USER=typecho/MYSQL_USER=$dbun/g" /root/app/mysql.env
     sed -i "s/mypassword/$dbpw/g" /root/app/mysql.env
 }
@@ -35,6 +35,7 @@ Config(){
                 sed -i "s/'password' => 'mypassword'/'password' => '$dbpw'/g" /root/app/config.inc.php
                 sed -i "s/'database' => 'typecho'/'database' => '$dbname'/g" /root/app/config.inc.php
                 mv /root/app/config.inc.php /root/app/typecho
+                echo "已创建config.inc.php文件"
                 break
             ;;
             [nN][oO]|[nN])
@@ -76,20 +77,24 @@ EnableSSL(){
     done
 }
 
-echo "开始安装"
-SetDomain
-echo "域名配置完成"
-echo "----------------------------------------"
-echo "开始配置数据库"
-SetDB
-echo "数据库配置完成"
-echo "----------------------------------------"
-echo "开始安装"
-cd /root/app
-docker-compose up -d
-echo "安装完成，请打开http://$domain进行基本配置"
-echo "----------------------------------------"
-Config
-echo "请回到网页完成后续配置"
-echo "----------------------------------------"
-EnableSSL
+Setup(){
+    echo "开始安装"
+    SetDomain
+    echo "域名配置完成"
+    echo "----------------------------------------"
+    echo "开始配置数据库"
+    SetDB
+    echo "数据库配置完成"
+    echo "----------------------------------------"
+    echo "开始安装"
+    cd /root/app
+    docker-compose up -d
+    echo "安装完成，请打开http://$domain进行基本配置"
+    echo "----------------------------------------"
+    Config
+    echo "请回到网页完成后续配置"
+    echo "----------------------------------------"
+    EnableSSL
+}
+
+Setup
