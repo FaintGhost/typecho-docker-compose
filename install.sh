@@ -2,6 +2,23 @@
 
 INSTALL_PATH=`pwd`
 
+choose(){
+    echo -e "请输入你的选择: \n"
+    until
+    echo "1.开始安装Typecho"
+    echo "2.申请Let's Encrypt证书并开启SSL"
+    echo -e "3.退出脚本 \n" 
+    read input
+    test $input = 6
+    do
+        case $input in
+            1) setup;;
+            2) enableSSL;;    
+            3) break;;
+        esac
+    done
+}
+
 checkRoot(){
     if [ $(id -u) != "0" ]; then
         echo "ROOT用户 [x]"
@@ -34,7 +51,7 @@ checkDockerInstall()
         sudo curl -L "https://github.com/docker/compose/releases/download/1.25.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
         sudo chmod +x /usr/local/bin/docker-compose
         echo "安装完成!"
-    fi    
+    fi
 }
 
 setDomain(){
@@ -141,4 +158,4 @@ setup(){
     enableSSL
 }
 
-setup
+choose
