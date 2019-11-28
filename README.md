@@ -3,10 +3,9 @@
 ### 安装
 请使用全新的一键安装脚本
 ```bash
-git clone --recursive https://github.com/FaintGhost/typecho-docker-compose.git app
+git clone --recursive https://github.com/FaintGhost/typecho-docker-compose.git
 ```
 ```bash
-cd app
 chmod +x install.sh
 ./install.sh
 ```
