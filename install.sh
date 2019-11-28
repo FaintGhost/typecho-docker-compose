@@ -37,9 +37,6 @@ checkDockerInstall()
     fi    
 }
 
-docker_install
-
-
 setDomain(){
     read -p "请输入你要作为博客的域名: " domain
     sed -i "s/yourdomain.com/$domain/g" $INSTALL_PATH/typechohttp.conf
