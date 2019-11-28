@@ -65,10 +65,11 @@ EnableSSL(){
                 chmod +x $INSTALL_PATH/acme.sh/acme.sh
                 $INSTALL_PATH/acme.sh/acme.sh --issue -d $domain -w $INSTALL_PATH/typecho --force
                 echo "证书申请成功"
-                mv /root/.acme.sh/$domain/fullchain.cer $INSTALL_PATH/typecho
-                mv /root/.acme.sh/$domain/$domain.key $INSTALL_PATH/typecho
+                mv /root/.acme.sh/$domain/fullchain.cer $INSTALL_PATH/ssl
+                mv /root/.acme.sh/$domain/$domain.key $INSTALL_PATH/ssl
                 docker-compose restart nginx
                 echo "所有配置已完成"
+                echo "请使用https://$domain访问您的博客"
                 break
             ;;
             [nN][oO]|[nN])
