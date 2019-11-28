@@ -39,10 +39,10 @@ Config(){
                 break
             ;;
             [nN][oO]|[nN])
-                echo "请完成基本配置！"
+                echo "请完成基本配置"
             ;;
             *)
-                echo "请完成基本配置！"
+                echo "请完成基本配置"
             ;;
         esac
     done
@@ -51,7 +51,7 @@ Config(){
 EnableSSL(){
     while true
     do
-        read -r -p "是否要开启SSL? [y/n]" input
+        read -r -p "是否要开启全站SSL? [y/n]" input
         
         case $input in
             [yY][eE][sS]|[yY])
