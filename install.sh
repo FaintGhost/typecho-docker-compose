@@ -1,9 +1,11 @@
 #!/bin/sh
 
+INSTALL_PATH=`pwd`
+
 SetDomain(){
     read -p "请输入你要作为博客的域名: " domain
-    sed -i "s/yourdomain.com/$domain/g" /root/app/typechohttp.conf
-    sed -i "s/yourdomain.com/$domain/g" /root/app/typechohttps.conf
+    sed -i "s/yourdomain.com/$domain/g" $INSTALL_PATH/typechohttp.conf
+    sed -i "s/yourdomain.com/$domain/g" $INSTALL_PATH/typechohttps.conf
     mv typechohttp.conf typecho.conf
     echo "将域名设定为$domain"
 }
@@ -13,10 +15,10 @@ SetDB(){
     read -p "请输入数据库ROOT密码: " dbrootpw
     read -p "请输入数据库用户名: " dbun
     read -p "请输入数据库密码: " dbpw
-    sed -i "s/MYSQL_DATABASE=typecho/MYSQL_DATABASE=$dbname/g" /root/app/mysql.env
-    sed -i "s/myrootpassword/$dbrootpw/g" /root/app/mysql.env
-    sed -i "s/MYSQL_USER=typecho/MYSQL_USER=$dbun/g" /root/app/mysql.env
-    sed -i "s/mypassword/$dbpw/g" /root/app/mysql.env
+    sed -i "s/MYSQL_DATABASE=typecho/MYSQL_DATABASE=$dbname/g" $INSTALL_PATH/mysql.env
+    sed -i "s/myrootpassword/$dbrootpw/g" $INSTALL_PATH/mysql.env
+    sed -i "s/MYSQL_USER=typecho/MYSQL_USER=$dbun/g" $INSTALL_PATH/mysql.env
+    sed -i "s/mypassword/$dbpw/g" $INSTALL_PATH/mysql.env
 }
 
 GetIPAddress(){
@@ -31,10 +33,10 @@ Config(){
         
         case $input in
             [yY][eE][sS]|[yY])
-                sed -i "s/'user' => 'typecho'/'user' => '$dbun'/g" /root/app/config.inc.php
-                sed -i "s/'password' => 'mypassword'/'password' => '$dbpw'/g" /root/app/config.inc.php
-                sed -i "s/'database' => 'typecho'/'database' => '$dbname'/g" /root/app/config.inc.php
-                mv /root/app/config.inc.php /root/app/typecho
+                sed -i "s/'user' => 'typecho'/'user' => '$dbun'/g" $INSTALL_PATH/config.inc.php
+                sed -i "s/'password' => 'mypassword'/'password' => '$dbpw'/g" $INSTALL_PATH/config.inc.php
+                sed -i "s/'database' => 'typecho'/'database' => '$dbname'/g" $INSTALL_PATH/config.inc.php
+                mv $INSTALL_PATH/config.inc.php $INSTALL_PATH/typecho
                 echo "已创建config.inc.php文件"
                 break
             ;;
@@ -57,14 +59,14 @@ EnableSSL(){
             [yY][eE][sS]|[yY])
                 mv typecho.conf typechohttp.conf
                 mv typechohttps.conf typecho.conf
-                sed -i "s/#define('__TYPECHO_SECURE__',true);/define('__TYPECHO_SECURE__',true);/g" /root/app/typecho/config.inc.php
-                sed -i 's#$this->commentUrl()#echo str_replace("http","https",\$this->commentUrl());#g' /root/app/typecho/usr/themes/default/comments.php
+                sed -i "s/#define('__TYPECHO_SECURE__',true);/define('__TYPECHO_SECURE__',true);/g" $INSTALL_PATH/typecho/config.inc.php
+                sed -i 's#$this->commentUrl()#echo str_replace("http","https",\$this->commentUrl());#g' $INSTALL_PATH/typecho/usr/themes/default/comments.php
                 echo "使用acme.sh申请Let's Encrypt证书"
-                chmod +x /root/app/acme.sh/acme.sh
-                /root/app/acme.sh/acme.sh --issue -d $domain -w /root/app/typecho --force
+                chmod +x $INSTALL_PATH/acme.sh/acme.sh
+                $INSTALL_PATH/acme.sh/acme.sh --issue -d $domain -w $INSTALL_PATH/typecho --force
                 echo "证书申请成功"
-                mv /root/.acme.sh/$domain/fullchain.cer /root/app/typecho
-                mv /root/.acme.sh/$domain/$domain.key /root/app/typecho
+                mv /root/.acme.sh/$domain/fullchain.cer $INSTALL_PATH/typecho
+                mv /root/.acme.sh/$domain/$domain.key $INSTALL_PATH/typecho
                 docker-compose restart nginx
                 echo "所有配置已完成"
                 break
@@ -91,7 +93,7 @@ Setup(){
     echo "数据库配置完成"
     echo "----------------------------------------"
     echo "开始安装"
-    cd /root/app
+    cd $INSTALL_PATH
     docker-compose up -d
     echo "安装完成，请打开http://$domain进行基本配置"
     echo "----------------------------------------"
