@@ -104,7 +104,7 @@ enableSSL(){
                 mv ~/.acme.sh/$domain/$domain.key $INSTALL_PATH/ssl
                 docker-compose restart nginx
                 echo "所有配置已完成"
-                echo "请使用'https://$domain'访问您的博客"
+                echo "请使用 https://$domain 访问您的博客"
                 break
             ;;
             [nN][oO]|[nN])
@@ -133,7 +133,7 @@ setup(){
     echo "开始安装"
     cd $INSTALL_PATH
     docker-compose up -d
-    echo "安装完成，请打开'http://$domain'进行基本配置"
+    echo "安装完成，请打开 http://$domain 进行基本配置"
     echo "----------------------------------------"
     config
     echo "请回到网页完成后续配置"
