@@ -1,3 +1,6 @@
 [submodule "acme.sh"]
 	path = acme.sh
 	url = https://github.com/Neilpang/acme.sh.git
+[submodule "typecho"]
+	path = typecho
+	url = https://github.com/typecho/typecho.git
