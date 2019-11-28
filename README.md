@@ -6,6 +6,5 @@
 git clone --recursive https://github.com/FaintGhost/typecho-docker-compose.git
 ```
 ```bash
-chmod +x install.sh
-./install.sh
+sudo bash install.sh
 ```
